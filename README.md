@@ -1,21 +1,49 @@
 # n8n Workflow – Recipe Maker
 
 ## 📌 Overview
-This n8n workflow generates recipes based on user input using automation logic.
+Recipe Maker is an automation workflow built using **n8n** that generates recipes based on user-provided inputs such as ingredients or preferences.
+
+This project was created as part of my exploration into **automation logic and agent-style workflows**, focusing on how inputs can be transformed into structured outputs through conditional and sequential processing.
+
+---
+
+## 🎯 Why I Built This
+I built this workflow to:
+- Understand how automation tools like n8n handle data flow
+- Practice breaking a problem into step-by-step logic
+- Explore how user input can drive dynamic responses
+
+This serves as a **foundational project** before moving into more complex agentic AI workflows.
+
+---
 
 ## ⚙️ Trigger
-- Manual / Webhook (depending on configuration)
+- Manual trigger / Webhook (depending on configuration)
 
-## 🧩 Nodes Used
+---
+
+## 🧩 Workflow Logic (High-Level)
+1. Accepts user input (ingredients or preferences)
+2. Processes input using structured automation steps
+3. Generates a recipe-style output based on logic rules
+
+---
+
+## 🛠️ Nodes Used
 - Trigger node
-- Set
-- AI / Logic nodes
-- Response node
+- Set / processing nodes
+- Logic-based transformation nodes
 
-## 🚀 How to Use
-1. Import `Recipe maker.json` into n8n
-2. Configure required credentials
-3. Activate workflow
+---
 
-## 🔐 Security
-No credentials or secrets are included in this repository.
+## 📚 What I Learned
+- How to structure workflows in n8n
+- How data moves between nodes
+- Importance of clear logic even in simple automation
+- Laying the groundwork for agent-style systems
+
+---
+
+## 🔒 Notes
+- Credentials and secrets are not included
+- Workflow is shared in JSON format for learning and reference
