@@ -1,0 +1,234 @@
+{
+  "name": "Recipe maker",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e171659d-ac61-4c0c-9189-a2a7fcc56556",
+      "name": "When chat message received",
+      "webhookId": "5ba9e309-b934-422f-a7f8-65d0bfd4e72d"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "<AgentInstructions>\n<Role>\n    <name>RecipeGeneratorAgent</name>\n    <description>A helpful cooking assistant that generates custom recipes.</description>\n</Role>\n<Goal>\n    <Primary>Provide a complete recipe including ingredients and step-by-step instructions\n    based on the user's requested dish. </Primary>\n</Goal>\n<Instructions>\n    <Instruction>Once you receive the user's dish name note them down carefully.\n    </Instruction>\n    <Instruction>Generate a list of ingredients with accurate quantities tailored to the\n    specified serving size.</Instruction>\n    <Instruction>Provide clear, step-by-step instructions on how to prepare the dish.\n    </Instruction>\n    <Instruction>Where applicable, include cooking times, tips, or variations to enhance the\n    recipe.</Instruction>\n</Instructions>\n\n</AgentInstructions>\n\n<Examples>\n    <Example>\n        <userinput> Paneer butter masala </userinput>\n\n        <useroutput> \n            \n           {\n                \"recipe_name\": \"Paneer Butter Masala\",\n                \"servings\": 4,\n\n                \"ingredients\": \"Paneer: 250 grams; Onions: 2 large; Tomatoes: 2 large; Butter: 1 tablespoon; Oil: 2 tablespoons; Cumin Seeds: 1 teaspoon; Garam Masala: 1 teaspoon; Turmeric: 1 teaspoon; Red Chili Powder: 1 teaspoon; Salt: 1/2 teaspoon; Garlic: 2 cloves; Ginger: 1 inch piece; Tomato Puree: 2 tablespoons; Water: 1 cup; Cilantro: For garnish.\",\n\n                \"instructions\": \"Prepare the paneer. Make the masala base. Sauté onions until golden. Add ginger and garlic and cook for 1 minute. Add all dry spices and sauté gently. Add chopped tomatoes and cook until soft. Mix in tomato puree and water; simmer for 5–7 minutes. Add paneer cubes and cook on low heat. Adjust seasoning and finish with cream or butter. Garnish with cilantro and serve hot.\",\n\n                \"tips\": \"Soak paneer in warm water for 10 minutes to keep it soft. Use Kashmiri red chili powder for vibrant color. Simmer the gravy slowly for richer flavor. Add a spoon of fresh cream at the end for extra richness.\"\n            }\n\n        </useroutput>\n    </Example>\n</Examples>\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "c4a87252-1a99-40fd-b566-0746d76abe46",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "e3ec7615-3928-4d25-a654-3e2bf33678f5",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "szKRDcRP1VUSkLe6",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n                \"recipe_name\": \"Paneer Butter Masala\",\n                \"servings\": 4,\n\n                \"ingredients\": \"Paneer: 250 grams; Onions: 2 large; Tomatoes: 2 large; Butter: 1 tablespoon; Oil: 2 tablespoons; Cumin Seeds: 1 teaspoon; Garam Masala: 1 teaspoon; Turmeric: 1 teaspoon; Red Chili Powder: 1 teaspoon; Salt: 1/2 teaspoon; Garlic: 2 cloves; Ginger: 1 inch piece; Tomato Puree: 2 tablespoons; Water: 1 cup; Cilantro: For garnish.\",\n\n                \"instructions\": \"Prepare the paneer. Make the masala base. Sauté onions until golden. Add ginger and garlic and cook for 1 minute. Add all dry spices and sauté gently. Add chopped tomatoes and cook until soft. Mix in tomato puree and water; simmer for 5–7 minutes. Add paneer cubes and cook on low heat. Adjust seasoning and finish with cream or butter. Garnish with cilantro and serve hot.\",\n\n                \"tips\": \"Soak paneer in warm water for 10 minutes to keep it soft. Use Kashmiri red chili powder for vibrant color. Simmer the gravy slowly for richer flavor. Add a spoon of fresh cream at the end for extra richness.\"\n            }"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        384,
+        208
+      ],
+      "id": "bde6becd-b620-4066-ad31-90f841845654",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "app821L4cwyAaHPjB",
+          "mode": "list",
+          "cachedResultName": "Recipe dashboard",
+          "cachedResultUrl": "https://airtable.com/app821L4cwyAaHPjB"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblKfsfJF36UHh1TA",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/app821L4cwyAaHPjB/tblKfsfJF36UHh1TA"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "recipe_name": "={{ $json.output.recipe_name }}",
+            "servings": "={{ $json.output.servings }}",
+            "ingridients": "={{ $json.output.ingredients }}",
+            "instructions": "={{ $json.output.instructions }}",
+            "tips": "={{ $json.output.tips }}"
+          },
+          "matchingColumns": [
+            "Recipe details"
+          ],
+          "schema": [
+            {
+              "id": "recipe_name",
+              "displayName": "recipe_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "servings",
+              "displayName": "servings",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ingridients",
+              "displayName": "ingridients",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "instructions",
+              "displayName": "instructions",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "tips",
+              "displayName": "tips",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        560,
+        0
+      ],
+      "id": "86b6db40-f930-48b3-a102-47886e5b9cf1",
+      "name": "Recipe",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "O3DTv34Bql968VPi",
+          "name": "Airtable Personal Access Token account 4"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Recipe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a429af3f-6574-4db4-8699-17dcf83792dc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1e9a1fb95c4a5ce688df337ea60519abddf5104d3a3dca7b914f8eed8c117bca"
+  },
+  "id": "Za3K8l0p23YU2YHH",
+  "tags": []
+}
