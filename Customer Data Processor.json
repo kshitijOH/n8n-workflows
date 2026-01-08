@@ -1,0 +1,231 @@
+{
+  "name": "Customer Data Processor",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a776d69c-4f8e-444c-824b-24bb98695652",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAllPeople"
+      },
+      "type": "n8n-nodes-base.n8nTrainingCustomerDatastore",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "8272cdae-c9d5-4679-9b98-b054759148b0",
+      "name": "Customer Datastore (n8n training)"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1knvQnqT-xisJDOIwF1thVXxtaNZTdmMECncUlPO3JKY",
+          "mode": "list",
+          "cachedResultName": "mock_data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1knvQnqT-xisJDOIwF1thVXxtaNZTdmMECncUlPO3JKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 526755818,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1knvQnqT-xisJDOIwF1thVXxtaNZTdmMECncUlPO3JKY/edit#gid=526755818"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        416,
+        0
+      ],
+      "id": "4912b6a9-77f9-48dd-883e-347f395657fc",
+      "name": "Dataset",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YauHhZwGOUUH6Oy0",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4b1bf462-6b88-4d41-b811-cdb554b8b16d",
+              "leftValue": "={{ $json.Country }}",
+              "rightValue": "Canada",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "8c6ee352-8271-4e65-a947-3ce5e493056c",
+              "leftValue": "={{ $json.Profit }}",
+              "rightValue": 10000,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "a3188193-8978-4dc4-a344-70a1bb3cd084",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "24667218-039c-4b58-8422-a9005f7efa8e",
+              "name": "Segment",
+              "value": "={{ $json.Segment }}",
+              "type": "string"
+            },
+            {
+              "id": "9fd962eb-3102-44ee-8f0b-212f56f934a9",
+              "name": "Country",
+              "value": "={{ $json.Country }}",
+              "type": "string"
+            },
+            {
+              "id": "df92c192-df85-41c2-8779-2e16d443865d",
+              "name": "Profit",
+              "value": "={{ $json.Profit }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        0
+      ],
+      "id": "b3fa3937-726c-4a9a-870f-13693c4186da",
+      "name": "edit fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "48184036-e3f1-4fcd-9e4f-887721a064d3",
+              "name": "Segment",
+              "value": "={{ $json.Segment }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        -96
+      ],
+      "id": "1fefcf13-1c59-4d7f-b8b7-5589e90abd17",
+      "name": "Segment filter"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Customer Datastore (n8n training)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Datastore (n8n training)": {
+      "main": [
+        [
+          {
+            "node": "Dataset",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dataset": {
+      "main": [
+        [
+          {
+            "node": "edit fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Segment filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "edit fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "06813fe9-2517-4c65-96e0-d7e7f1185336",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1e9a1fb95c4a5ce688df337ea60519abddf5104d3a3dca7b914f8eed8c117bca"
+  },
+  "id": "AeIZ2SO2m3uC5EAd",
+  "tags": []
+}
