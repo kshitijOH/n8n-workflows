@@ -1,49 +1,33 @@
-# n8n Workflow – Recipe Maker
-
-## 📌 Overview
-Recipe Maker is an automation workflow built using **n8n** that generates recipes based on user-provided inputs such as ingredients or preferences.
-
-This project was created as part of my exploration into **automation logic and agent-style workflows**, focusing on how inputs can be transformed into structured outputs through conditional and sequential processing.
-
 ---
 
-## 🎯 Why I Built This
-I built this workflow to:
-- Understand how automation tools like n8n handle data flow
-- Practice breaking a problem into step-by-step logic
-- Explore how user input can drive dynamic responses
+## 📊 Customer Data Processor
 
-This serves as a **foundational project** before moving into more complex agentic AI workflows.
+### 🔍 Overview
+Customer Data Processor is an automation workflow built using n8n that ingests raw customer data and transforms it into structured, usable formats for downstream systems or analysis.
 
----
+This workflow focuses on data normalization, validation, and logical routing — simulating how backend systems handle real-world user data.
 
-## ⚙️ Trigger
-- Manual trigger / Webhook (depending on configuration)
+### ⚙️ Core Capabilities
+- Accepts raw customer input (JSON / form / webhook-based)
+- Cleans and standardizes fields (name, email, IDs, etc.)
+- Applies conditional logic for missing or invalid data
+- Prepares structured output for databases or APIs
 
----
+### 🧩 Nodes & Logic Used
+- Trigger / Webhook
+- Set & Transform nodes
+- IF / conditional branching
+- Data mapping & restructuring logic
 
-## 🧩 Workflow Logic (High-Level)
-1. Accepts user input (ingredients or preferences)
-2. Processes input using structured automation steps
-3. Generates a recipe-style output based on logic rules
+### 🧠 Why I Built This
+I built this workflow to understand how automation systems process customer data at scale and how decision-based logic can be applied before data reaches storage layers like databases or CRMs.
 
----
+This project helped me strengthen my understanding of:
+- Data pipelines
+- Backend-style validation logic
+- Automation-driven preprocessing
 
-## 🛠️ Nodes Used
-- Trigger node
-- Set / processing nodes
-- Logic-based transformation nodes
-
----
-
-## 📚 What I Learned
-- How to structure workflows in n8n
-- How data moves between nodes
-- Importance of clear logic even in simple automation
-- Laying the groundwork for agent-style systems
-
----
-
-## 🔒 Notes
-- Credentials and secrets are not included
-- Workflow is shared in JSON format for learning and reference
+### 🚀 Future Improvements
+- Database integration (MySQL)
+- Schema validation layer
+- Error logging & retry logic
