@@ -62,11 +62,3 @@ decision-based logic can be applied before data reaches storage layers like data
 
 ---
 
-## 🚀 Upcoming Workflows
-- Smart Task Extractor
-- Response Logic Engine
-- Email Reply Agent
-- Automated Role Grader
-
-These upcoming projects will focus more heavily on **agentic behavior**, **decision engines**, and
-**AI-assisted automation**.
