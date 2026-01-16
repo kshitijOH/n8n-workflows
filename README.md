@@ -1,64 +1,72 @@
-# n8n Workflows – Agentic AI & Automation Projects
+# n8n Workflows – Agentic Automation Projects
 
-This repository contains a collection of automation workflows built using **n8n**, focusing on
-agent-style logic, decision-based processing, and backend-oriented data transformations.
+This repository contains a collection of automation workflows built using **n8n**, focused on **agentic logic, decision-making systems, and backend-style data processing**.
 
-These projects were created as part of my exploration into **agentic AI**, **automation systems**, and
-**logic-driven workflows**, alongside my core focus on **DSA** and **backend fundamentals**.
+The goal of these projects is to explore how automation pipelines can simulate real-world system behavior such as data normalization, rule-based responses, and structured output generation.
 
 ---
 
-## 🍳 Recipe Maker
+## 🚀 Projects Included
 
-### 🔍 Overview
-Recipe Maker is an automation workflow that generates recipes based on user-provided inputs such as
-ingredients or preferences.
+### 🥗 Recipe Maker
+An automation workflow that generates recipes based on user-provided inputs such as ingredients or preferences.
 
-The workflow demonstrates how structured automation logic can transform free-form user input into
-meaningful, formatted outputs.
+**What it demonstrates:**
+- Input-driven workflow execution  
+- Sequential transformation logic  
+- Structured output generation  
 
-### ⚙️ Core Capabilities
-- Accepts user inputs via manual trigger or webhook
-- Applies conditional logic to process ingredients
-- Generates structured recipe responses
-- Demonstrates sequential automation logic
-
-### 🧩 Nodes & Logic Used
-- Trigger node
-- Set nodes
-- Conditional (IF) logic
-- Output formatting logic
-
-### 🧠 Why I Built This
-I built this workflow to understand the fundamentals of automation logic in n8n and how user input can
-be incrementally transformed into structured output using conditional and sequential processing.
+**Key concepts:** automation flow design, conditional steps, data transformation  
+📁 File: `Recipe maker.json`
 
 ---
 
-## 📊 Customer Data Processor
+### 📊 Customer Data Processor
+A workflow designed to ingest raw customer data and transform it into clean, structured formats suitable for databases or downstream systems.
 
-### 🔍 Overview
-Customer Data Processor is an automation workflow built using n8n that ingests raw customer data and
-transforms it into structured, usable formats for downstream systems or analysis.
+**What it demonstrates:**
+- Data normalization and validation  
+- Conditional routing for missing or invalid fields  
+- Backend-style preprocessing logic  
 
-This workflow focuses on data normalization, validation, and logical routing — simulating how backend
-systems handle real-world user data.
-
-### ⚙️ Core Capabilities
-- Accepts raw customer input (JSON / form / webhook-based)
-- Cleans and standardizes fields (name, email, IDs, etc.)
-- Applies conditional logic for missing or invalid data
-- Prepares structured output for databases or APIs
-
-### 🧩 Nodes & Logic Used
-- Trigger / Webhook
-- Set & Transform nodes
-- IF / conditional branching
-- Data mapping & restructuring logic
-
-### 🧠 Why I Built This
-I built this workflow to understand how automation systems process customer data at scale and how
-decision-based logic can be applied before data reaches storage layers like databases or CRMs.
+**Key concepts:** data pipelines, IF-based branching, structured output preparation  
+📁 File: `Customer Data Processor.json`
 
 ---
 
+### 🧠 Response Logic Engine
+A rule-based automation system that generates responses using layered conditional logic.
+
+This workflow simulates how decision engines or agent controllers evaluate inputs and determine appropriate outputs.
+
+**What it demonstrates:**
+- Multi-level conditional logic  
+- Decision-driven response generation  
+- Agent-style reasoning patterns  
+
+**Key concepts:** decision trees, logic engines, agentic workflows  
+📁 File: `Response logic engine.json`
+
+---
+
+## 🛠 Tech Stack & Tools
+- **n8n** – workflow automation platform  
+- **JSON-based workflow definitions**  
+- Conditional logic, data transformation, and routing nodes  
+
+---
+
+## 🎯 Purpose
+These workflows were built as part of a focused effort to strengthen understanding of:
+- Automation-first system design  
+- Agentic AI patterns  
+- Backend logic and decision-making pipelines  
+
+They are intended to reflect **logic clarity, structure, and reasoning**, rather than UI-focused development.
+
+---
+
+## 📌 Notes
+- All workflows are exportable and reusable within n8n
+- Credentials and secrets are intentionally excluded
+- Projects are designed for learning, experimentation, and demonstration of automation logic
