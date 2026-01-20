@@ -1,0 +1,401 @@
+{
+  "name": "Smart Task Extractor",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "smart-task-extractor",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b0fdf67b-652e-4515-a3ed-3e4a238e9b0f",
+      "name": "Webhook",
+      "webhookId": "fc28bc94-9ac6-4721-80e9-6c2cf890be64"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a5db4df7-8430-430b-87e1-92023224606b",
+              "name": "raw_message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            },
+            {
+              "id": "9e153485-22aa-4434-bfb5-95b46ad0c684",
+              "name": "user_name",
+              "value": "={{$json.body.user}}",
+              "type": "string"
+            },
+            {
+              "id": "d9a836c2-fc05-42c8-abf1-7f5e8ab19750",
+              "name": "source_channel",
+              "value": "={{$json.body.source}}",
+              "type": "string"
+            },
+            {
+              "id": "5c94dc8f-25c7-457a-944d-73d94d5b0f97",
+              "name": "received_at",
+              "value": "={{$now}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "90d68857-f49c-4d58-a02e-a193526be2f5",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a task extraction assistant.\n\nToday’s date is {{ $now.toISO().slice(0,10) }}.\n\nAnalyze the following message and determine if it contains a task or reminder.\n\nMessage:\n\"{{$json.raw_message}}\"\n\nIf it is a task, extract and return ONLY valid JSON in this format:\n{\n  \"is_task\": true,\n  \"task_title\": \"\",\n  \"due_date\": \"\",\n  \"due_time\": \"\",\n  \"priority\": \"\"\n}\n\nRules:\n- due_date must be in YYYY-MM-DD format\n- Resolve relative dates like \"today\", \"tomorrow\", \"next Monday\" using today’s date\n- due_time must be in HH:MM (24-hour format) or null if not mentioned\n- priority must be one of: High, Medium, Low\n\nIf the message is NOT a task, return ONLY:\n{\n  \"is_task\": false\n}\n\nDo not include explanations, markdown, or extra text.\nReturn JSON only.\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "a8501818-0e03-4322-9ed5-bb784f042745",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.1-8b-instant",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        288,
+        208
+      ],
+      "id": "272c6cfd-595d-40a3-a828-845695568849",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "szKRDcRP1VUSkLe6",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1a0b1cec-fd61-4fc5-ae55-387a4025f8ca",
+              "name": "is_task",
+              "value": "={{ JSON.parse($json.output).is_task }}",
+              "type": "string"
+            },
+            {
+              "id": "09274be8-bf88-4c91-9038-016c4ce19655",
+              "name": "=task_title",
+              "value": "={{ JSON.parse($json.output).task_title }}",
+              "type": "string"
+            },
+            {
+              "id": "cc4465d6-6ff6-4d7c-a788-7a12624267d2",
+              "name": "due_date",
+              "value": "={{ JSON.parse($json.output).due_date }}",
+              "type": "string"
+            },
+            {
+              "id": "b966a9b1-4934-4cb2-9a79-9da358136eae",
+              "name": "due_time",
+              "value": "={{ JSON.parse($json.output).due_time }}",
+              "type": "string"
+            },
+            {
+              "id": "c0f440a5-b70f-4e93-bd47-49b3b64e5b82",
+              "name": "priority",
+              "value": "={{ JSON.parse($json.output).priority }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        768,
+        0
+      ],
+      "id": "acbb5e15-2b12-4215-b3bd-a2a015c32500",
+      "name": "mapping"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appPQJksbI7azrPy8",
+          "mode": "list",
+          "cachedResultName": "Smart Task Extractor ",
+          "cachedResultUrl": "https://airtable.com/appPQJksbI7azrPy8"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl4xXo8lFFJdYlWA",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appPQJksbI7azrPy8/tbl4xXo8lFFJdYlWA"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Task Title": "={{ $json.task_title }}\n",
+            "Due Date": "={{ $json.due_date }}\n",
+            "Due Time": "={{ $json.due_time }}\n",
+            "Priority": "={{ $json.priority }}",
+            "Source": "Webhook",
+            "Status": "To-Do",
+            "Original Message": "={{ $('Edit Fields').item.json.raw_message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Task ID",
+              "displayName": "Task ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Task Title",
+              "displayName": "Task Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Original Message",
+              "displayName": "Original Message",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Due Date",
+              "displayName": "Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Due Time",
+              "displayName": "Due Time",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "High",
+                  "value": "High"
+                },
+                {
+                  "name": "Medium",
+                  "value": "Medium"
+                },
+                {
+                  "name": "Low",
+                  "value": "Low"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Webhook",
+                  "value": "Webhook"
+                },
+                {
+                  "name": "Telegram Trigger",
+                  "value": "Telegram Trigger"
+                },
+                {
+                  "name": "Slack",
+                  "value": "Slack"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "To-Do",
+                  "value": "To-Do"
+                },
+                {
+                  "name": "Done",
+                  "value": "Done"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Created At",
+              "displayName": "Created At",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        960,
+        16
+      ],
+      "id": "639e4c5f-4171-4a14-a80c-2fd45ebb5c68",
+      "name": "airtable execution",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "tuIoo8aoQmQRW6a4",
+          "name": "Airtable Personal Access Token account 5"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "mapping",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mapping": {
+      "main": [
+        [
+          {
+            "node": "airtable execution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3650edde-ba69-44b1-8ce8-f8c9540290ce",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1e9a1fb95c4a5ce688df337ea60519abddf5104d3a3dca7b914f8eed8c117bca"
+  },
+  "id": "dA5HT0tAnxcjaduX",
+  "tags": []
+}
