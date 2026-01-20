@@ -49,6 +49,22 @@ This workflow simulates how decision engines or agent controllers evaluate input
 
 ---
 
+---
+
+### 🧩 Smart Task Extractor
+An agent-style automation workflow that analyzes unstructured text and extracts actionable tasks from it.
+
+This workflow focuses on interpreting intent from free-form input and converting it into structured task data that can be further processed by downstream systems or agents.
+
+**What it demonstrates:**
+- Intent detection from natural language input  
+- Task identification and structuring  
+- Interpretation-driven automation logic  
+
+**Key concepts:** text parsing, task extraction, agentic reasoning  
+📁 File: `Smart Task Extractor.json`
+
+
 ## 🛠 Tech Stack & Tools
 - **n8n** – workflow automation platform  
 - **JSON-based workflow definitions**  
