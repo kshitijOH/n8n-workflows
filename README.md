@@ -64,6 +64,21 @@ This workflow focuses on interpreting intent from free-form input and converting
 **Key concepts:** text parsing, task extraction, agentic reasoning  
 📁 File: `Smart Task Extractor.json`
 
+---
+
+### 📧 Email Reply Agent
+An agent-style automation workflow that generates context-aware email replies based on incoming email content and intent.
+
+This workflow simulates how intelligent systems analyze messages, classify intent, and construct appropriate responses rather than relying on static templates.
+
+**What it demonstrates:**
+- Intent classification from email content  
+- Context-aware response generation  
+- Rule-based decision logic for reply handling  
+
+**Key concepts:** intent detection, response orchestration, agentic communication logic  
+📁 File: `Email Reply Agent.json`
+
 
 ## 🛠 Tech Stack & Tools
 - **n8n** – workflow automation platform  
