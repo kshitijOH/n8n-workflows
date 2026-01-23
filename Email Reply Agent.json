@@ -1,0 +1,319 @@
+{
+  "name": "Email Reply Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6b09840a-1f90-4048-9393-46dee1972887",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 10,
+        "filters": {
+          "labelIds": [
+            "Label_1301942257419114985"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "7597e3e2-2627-409d-9453-9b76b7f0ed88",
+      "name": "All Mails",
+      "webhookId": "b0d3485c-014a-4202-8585-d034a5c8d235",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "EbU1IYKjWan7ilor",
+          "name": "Gmail account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $json.threadId }}",
+        "simple": false,
+        "options": {
+          "downloadAttachments": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "50e0e364-dfc7-495c-bfc0-dc005837e50d",
+      "name": "All Details",
+      "webhookId": "47070011-e438-422a-a431-de2a6182c04e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "EbU1IYKjWan7ilor",
+          "name": "Gmail account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Subject: {{ $json.subject }}\n\n\nEmail Body: {{ $json.text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "<Agentinstructions>\n\n    <Role>\n        <name> Email Reply Agent </name>\n        <description> helpful email reply agent </description>\n        </Role>\n\n    <Goal>\n        <primary> Draft custom but very professional Email replies which are 100% human like </primary>\n        <secondary>As an Email reply agent you should not only reply but also build trust and reputation with the person you are replying to </secondary>\n    </Goal>\n\n    <Instructions>\n        <Instruction> Once you recieve the email , you should thoroughly undesrstand and analyse the subject line and the full email body </Instruction>\n        <Instruction> After you read the email, Review <Details> and <Aim> to undesrstand the context of the user before drafting a reply </Instruction>\n        <Instruction> Draft a professional reply using <Userinfo> and use age when necessary. </Instruction>\n    </Instructions>\n\n    <Userinfo>\n        <Details>\n            <Detail name= \"User Name\"> Kshitij Gautam </Detail>\n            <Detail name=\"Age\"> 20 </Detail>\n            <Detail name=\"Contact Info\"> +91-9540347261</Detail>\n         <Details>\n\n        <Aims>\n            <Aim name= \"Mission \" > to gain the most unique skillset of my college </Aim>\n            <Aim name= \"Focus \" > Focusing more on upskilling rather than basic certifications .</Aim>\n            <Aim name= \"Community Focus \" > Focus on Community right now </Aim>\n        </Aims>\n\n     <Userinfo>\n\n     <Examples>\n        <Example> \n            <userinput>\n            subject: promotional message\n            this message is regarding a promotion that we are doing \n            </userinput>\n\n            <useroutput>\n            Hi [Sender's Name],\n            Thank you for reaching out and considering me for this.\n            I truly appreciate your trust, but I’d like to politely decline this request. At the moment, I’m focusing on my personal upskilling priorities and I’m keeping my commitments limited so that I can give my best to the work already on my plate.\n            I hope you understand, and I’m always happy to help in other ways whenever possible.\n            Thank you once again for your understanding.\n            Warm regards,\n            Kshitij Gautam\n            </useroutput>\n        </Example>\n\n        <Example> \n            <userinput>\n            subject: promotional message\n            I want you to know if you're interested in doing a project with us . we are looking for an AI agent master and we will offer you $1 million for that task.\n            </userinput>\n\n            <useroutput>\n            Hi Sender's [Name],\n            Thank you for reaching out and for considering me for such a significant opportunity. I sincerely appreciate the confidence you’ve shown.\n            However, I must respectfully decline this offer at the moment.\n            Although the proposal is generous, I am currently committed to my own learning priorities and personal goals, and I want to stay focused on the path I’ve set for myself.\n            I wish you the very best for your project and hope you find the right person for the role.\n            Thank you again for the offer and your understanding.\n            Warm regards,\n            Kshitij Gautam\n            </useroutput>\n        </Example>\n\n\n        <Example> \n            <userinput>\n            subject: request meeting time\n            hey brother , i actually wanted your time for tuesday this morning . would that be possible?\n            </userinput>\n\n            <useroutput>\n            Hi,\n            Thank you for getting in touch and considering me for a discussion on Tuesday morning.\n            Unfortunately, I won’t be available at that time due to prior commitments.\n            I appreciate your understanding, and please feel free to suggest an alternative time that may work for you.\n            Best regards,\n            Kshitij Gautam\n            </useroutput>\n        </Example>\n\n     <Examples>  \n</Agentinstructions>      \n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        624,
+        0
+      ],
+      "id": "418dd11b-f7bf-4a9d-b36b-2c0c32a53afc",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        496,
+        208
+      ],
+      "id": "ff2c2b2b-e40b-48e9-9036-9238dc9dc408",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "szKRDcRP1VUSkLe6",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appR7PU8M6phaVSnL",
+          "mode": "list",
+          "cachedResultName": "email reply",
+          "cachedResultUrl": "https://airtable.com/appR7PU8M6phaVSnL"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbldyvOMu52L22Vjy",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appR7PU8M6phaVSnL/tbldyvOMu52L22Vjy"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Sender's Name": "={{ $('All Details').item.json.from.value[0].name }}",
+            "from email": "={{ $('All Details').item.json.from.value[0].address }}",
+            "email body": "={{ $('All Details').item.json.text }}",
+            "body draft reply": "={{ $json.output }}",
+            "thread id": "={{ $('All Details').item.json.threadId }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Sender's Name",
+              "displayName": "Sender's Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "from email",
+              "displayName": "from email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email body",
+              "displayName": "email body",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "body draft reply",
+              "displayName": "body draft reply",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "thread id",
+              "displayName": "thread id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        976,
+        0
+      ],
+      "id": "2d79e37b-eddf-4764-9f68-9ced16285ce4",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "dCZ4m4RyLHi9Ej6T",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "markAsRead",
+        "messageId": "={{ $('All Details').item.json.threadId }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1184,
+        0
+      ],
+      "id": "06b8bf0e-8aea-483b-88a6-cd490f1fc077",
+      "name": "Mark a message as read",
+      "webhookId": "276fb8d2-c795-430f-be42-dcad449eb1fa",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "EbU1IYKjWan7ilor",
+          "name": "Gmail account 3"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "All Mails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "All Mails": {
+      "main": [
+        [
+          {
+            "node": "All Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "All Details": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a record": {
+      "main": [
+        [
+          {
+            "node": "Mark a message as read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8b34ee96-f64a-4955-bd33-081c63b97881",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1e9a1fb95c4a5ce688df337ea60519abddf5104d3a3dca7b914f8eed8c117bca"
+  },
+  "id": "MZF05hZnrNZYq9Lj",
+  "tags": []
+}
