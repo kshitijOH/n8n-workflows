@@ -97,6 +97,40 @@ They are intended to reflect **logic clarity, structure, and reasoning**, rather
 
 ---
 
+
+---
+
+### 🧑‍⚖️ Automated Role Grader
+An agentic automation workflow that evaluates candidate or user input against predefined role criteria and assigns suitability grades using rule-based decision logic.
+
+This workflow simulates how automated screening systems assess profiles before human review, focusing on structured evaluation rather than simple keyword matching.
+
+**What this workflow demonstrates:**
+- Rule-based evaluation across multiple criteria
+- Conditional scoring and grading logic
+- Decision-driven classification and output generation
+- Automation of pre-screening and shortlisting logic
+
+**Key concepts:** decision engines, scoring systems, conditional evaluation, agentic reasoning  
+📁 File: `Automated Role Grader.json`
+
+### 🧠 How It Works
+1. Accepts structured input representing candidate attributes (skills, experience, role preferences, etc.)
+2. Evaluates inputs against predefined role requirements
+3. Applies conditional logic to score and classify suitability
+4. Generates a final grade or recommendation based on decision paths
+
+### 🎯 Why This Project Matters
+I built this workflow to explore how **evaluation systems and decision engines** operate behind real-world platforms such as hiring pipelines, recommendation systems, and automated assessments.
+
+This project reflects my understanding of:
+- Translating abstract criteria into logical rules
+- Designing decision systems that scale
+- Agent-style reasoning where outcomes depend on structured evaluation rather than static responses
+
+
+
+
 ## 📌 Notes
 - All workflows are exportable and reusable within n8n
 - Credentials and secrets are intentionally excluded
